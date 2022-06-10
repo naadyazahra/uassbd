@@ -1,0 +1,182 @@
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mahasiswa          |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| prak_sbd           |
+| project            |
+| proweb             |
+| ruang_coding       |
+| ruangcoding        |
+| task_manager       |
+| todolist           |
+| tubes_pwl          |
+| tugas_besar        |
+| website_laravel    |
++--------------------+
+15 rows in set (0.003 sec)
+
+MariaDB [(none)]> use task_manager;
+Database changed
+MariaDB [task_manager]> SHOW TABLES;
++------------------------+
+| Tables_in_task_manager |
++------------------------+
+| failed_jobs            |
+| migrations             |
+| password_resets        |
+| personal_access_tokens |
+| task_categories        |
+| task_dailies           |
+| task_indicators        |
+| task_persons           |
+| task_plans             |
+| users                  |
++------------------------+
+10 rows in set (0.028 sec)
+
+MariaDB [task_manager]> DESC task_categories;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| id            | char(36)     | NO   | PRI | NULL    |       |
+| category_name | varchar(255) | NO   |     | NULL    |       |
+| description   | varchar(255) | YES  |     | NULL    |       |
+| created_at    | timestamp    | YES  |     | NULL    |       |
+| updated_at    | timestamp    | YES  |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+5 rows in set (0.014 sec)
+
+MariaDB [task_manager]> DESC task_dailies;
++--------------------+-------------------------------------------------+------+-----+---------+-------+
+| Field              | Type                                            | Null | Key | Default | Extra |
++--------------------+-------------------------------------------------+------+-----+---------+-------+
+| id                 | char(36)                                        | NO   | PRI | NULL    |       |
+| user_id            | varchar(255)                                    | NO   | MUL | NULL    |       |
+| plan_id            | varchar(255)                                    | NO   | MUL | NULL    |       |
+| task_status        | enum('Pending','Process','Finished','Canceled') | NO   |     | NULL    |       |
+| task_complete_date | date                                            | NO   |     | NULL    |       |
+| user_verify_id     | varchar(255)                                    | NO   | MUL | NULL    |       |
+| task_prove         | varchar(255)                                    | NO   |     | NULL    |       |
+| task_comments      | longtext                                        | NO   |     | NULL    |       |
+| created_at         | timestamp                                       | YES  |     | NULL    |       |
+| updated_at         | timestamp                                       | YES  |     | NULL    |       |
++--------------------+-------------------------------------------------+------+-----+---------+-------+
+10 rows in set (0.003 sec)
+
+MariaDB [task_manager]> DESC task_indicators;
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| id             | char(36)     | NO   | PRI | NULL    |       |
+| indicator_name | varchar(255) | NO   |     | NULL    |       |
+| output_value   | int(11)      | NO   |     | NULL    |       |
+| year           | year(4)      | NO   |     | NULL    |       |
+| created_at     | timestamp    | YES  |     | NULL    |       |
+| updated_at     | timestamp    | YES  |     | NULL    |       |
++----------------+--------------+------+-----+---------+-------+
+6 rows in set (0.005 sec)
+
+MariaDB [task_manager]> DESC task_persons;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| id         | char(36)     | NO   | PRI | NULL    |       |
+| task_id    | varchar(255) | NO   | MUL | NULL    |       |
+| teams      | varchar(255) | NO   |     | NULL    |       |
+| created_at | timestamp    | YES  |     | NULL    |       |
+| updated_at | timestamp    | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+5 rows in set (0.005 sec)
+
+MariaDB [task_manager]> DESC task_plans;
++--------------------+-------------------------------------------------+------+-----+---------+-------+
+| Field              | Type                                            | Null | Key | Default | Extra |
++--------------------+-------------------------------------------------+------+-----+---------+-------+
+| id                 | char(36)                                        | NO   | PRI | NULL    |       |
+| task_name          | varchar(255)                                    | NO   |     | NULL    |       |
+| ask_duration_start | date                                            | NO   |     | NULL    |       |
+| task_duration_end  | date                                            | NO   |     | NULL    |       |
+| user_create        | varchar(255)                                    | NO   | MUL | NULL    |       |
+| category_id        | varchar(255)                                    | NO   | MUL | NULL    |       |
+| indicators_id      | varchar(255)                                    | NO   | MUL | NULL    |       |
+| task_priority      | int(11)                                         | NO   |     | NULL    |       |
+| task_status        | enum('Pending','Process','Finished','Canceled') | NO   |     | NULL    |       |
+| created_at         | timestamp                                       | YES  |     | NULL    |       |
+| updated_at         | timestamp                                       | YES  |     | NULL    |       |
++--------------------+-------------------------------------------------+------+-----+---------+-------+
+11 rows in set (0.003 sec)
+
+MariaDB [task_manager]> DESC users;
++-------------------+--------------+------+-----+---------+-------+
+| Field             | Type         | Null | Key | Default | Extra |
++-------------------+--------------+------+-----+---------+-------+
+| id                | char(36)     | NO   | PRI | NULL    |       |
+| name              | varchar(255) | NO   |     | NULL    |       |
+| email             | varchar(255) | NO   | UNI | NULL    |       |
+| email_verified_at | timestamp    | YES  |     | NULL    |       |
+| password          | varchar(255) | NO   |     | NULL    |       |
+| remember_token    | varchar(100) | YES  |     | NULL    |       |
+| created_at        | timestamp    | YES  |     | NULL    |       |
+| updated_at        | timestamp    | YES  |     | NULL    |       |
++-------------------+--------------+------+-----+---------+-------+
+8 rows in set (0.003 sec)
+
+MariaDB [task_manager]> SELECT * FROM task_plans;
++--------------------------------------+-----------------------------------------+--------------------+-------------------+--------------------------------------+--------------------------------------+--------------------------------------+---------------+-------------+------------+------------+
+| id                                   | task_name                               | ask_duration_start | task_duration_end | user_create                          | category_id                          | indicators_id                        | task_priority | task_status | created_at | updated_at |
++--------------------------------------+-----------------------------------------+--------------------+-------------------+--------------------------------------+--------------------------------------+--------------------------------------+---------------+-------------+------------+------------+
+| 924eaa0e-c8f1-4132-a032-1d98c176a8c3 | Membuat Modul add_to_cart pada Aplikasi | 2022-06-10         | 2022-06-30        | 72233152-7af0-4e89-94fc-d8d02e73aba8 | 72233152-7af0-4e89-94fc-d8d02e73aba8 | 5e72be09-384e-4097-8e78-c20e84d88112 |             1 | Pending     | NULL       | NULL       |
+| c96fdbd6-a3a4-42e3-b437-444ffd734a36 | Menganalisa Data Kemahasiswaan          | 2022-06-10         | 2022-06-17        | 72233152-7af0-4e89-94fc-d8d02e73aba8 | e46f9318-ca1a-4a3d-a998-913c8fdf5917 | 669c981f-1bd6-47d5-b2ce-de568aaa160a |             2 | Process     | NULL       | NULL       |
+| f1ee037b-9135-41d2-9757-091391df4fb8 | Mendokumentasikan Code                  | 2022-06-10         | 2022-06-10        | 72233152-7af0-4e89-94fc-d8d02e73aba8 | 229d48a0-a643-42c2-832f-882297db9003 | 5e72be09-384e-4097-8e78-c20e84d88112 |             3 | Process     | NULL       | NULL       |
++--------------------------------------+-----------------------------------------+--------------------+-------------------+--------------------------------------+--------------------------------------+--------------------------------------+---------------+-------------+------------+------------+
+3 rows in set (0.001 sec)
+
+MariaDB [task_manager]> SELECT * FROM task_persons;
++--------------------------------------+--------------------------------------+-------------------------------------------------------------------------------------------+------------+------------+
+| id                                   | task_id                              | teams                                                                                     | created_at | updated_at |
++--------------------------------------+--------------------------------------+-------------------------------------------------------------------------------------------+------------+------------+
+| ac7ee465-587f-4b8c-b937-e9c7868500f7 | 924eaa0e-c8f1-4132-a032-1d98c176a8c3 | {'teams':['72233152-7af0-4e89-94fc-d8d02e73aba8']}                                        | NULL       | NULL       |
+| f8d31da1-e112-432e-b272-da61bc40a954 | c96fdbd6-a3a4-42e3-b437-444ffd734a36 | {'teams':['72233152-7af0-4e89-94fc-d8d02e73aba8','51ed88b2-fb06-4606-81ba-088e9ed52d1a']} | NULL       | NULL       |
++--------------------------------------+--------------------------------------+-------------------------------------------------------------------------------------------+------------+------------+
+2 rows in set (0.001 sec)
+
+MariaDB [task_manager]> SELECT * FROM task_indicators;
++--------------------------------------+----------------+--------------+------+------------+------------+
+| id                                   | indicator_name | output_value | year | created_at | updated_at |
++--------------------------------------+----------------+--------------+------+------------+------------+
+| 5e72be09-384e-4097-8e78-c20e84d88112 | Indikator 2    |          100 | 2022 | NULL       | NULL       |
+| 669c981f-1bd6-47d5-b2ce-de568aaa160a | Indikator 1    |          100 | 2022 | NULL       | NULL       |
++--------------------------------------+----------------+--------------+------+------------+------------+
+2 rows in set (0.001 sec)
+
+MariaDB [task_manager]> SELECT * FROM task_dailies;
+Empty set (0.001 sec)
+
+MariaDB [task_manager]> SELECT * FROM task_categories;
++--------------------------------------+---------------+--------------------------------------------+------------+------------+
+| id                                   | category_name | description                                | created_at | updated_at |
++--------------------------------------+---------------+--------------------------------------------+------------+------------+
+| 229d48a0-a643-42c2-832f-882297db9003 | Analisis      | Tugas Analisis                             | NULL       | NULL       |
+| 72233152-7af0-4e89-94fc-d8d02e73aba8 | Administrasi  | Tugas yang berhubungan dengan administrasi | NULL       | NULL       |
+| e46f9318-ca1a-4a3d-a998-913c8fdf5917 | Teknikal      | Tugas Teknikal                             | NULL       | NULL       |
++--------------------------------------+---------------+--------------------------------------------+------------+------------+
+3 rows in set (0.001 sec)
+
+MariaDB [task_manager]> CREATE VIEW 211402019 AS (
+    -> SELECT a.task_id, b.task_name, b.task status, c.id, d.category_name, c.indicator_name, e.id, e.name FROM task_persons a
+    -> LEFT JOIN task_plans b
+    -> ON a.task_id = b.id
+    -> LEFT JOIN task_indicators c
+    -> ON b.indicators_id = c.id
+    -> LEFT JOIN task_categories d
+    -> ON b.category_id = d.id
+    -> LEFT JOIN users e
+    -> ON b.user_create = e.id
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '211402019 AS (
+SELECT a.task_id, b.task_name, b.task status, c.id, d.category...' at line 1
